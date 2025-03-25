@@ -9,10 +9,14 @@ intents:
   - book_hotel
   - book_hotel_time
   - book_hotel_location
+  - cancel_reservation
+  - provide_number_reservation
+
 
 entities:
   - date
   - city
+  - number_reservation
 
 slots:
   city:
@@ -26,6 +30,17 @@ slots:
     mappings:
     - type: from_entity
       entity: date
+
+  number_reservation:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: number_reservation
+  
+  reservation_valid:
+    type: bool
+    mappings:
+    - type: custom
 
 responses:
   utter_greet:
@@ -48,6 +63,23 @@ responses:
 
   utter_booked_hotel:
   - text: "Votre chambre d'hôtel a bien été réservée."
+
+  utter_confirm_cancel_reservation:
+  - text: "Voulez-vous vraiment annuler votre réservation ?"
+
+  utter_cancel_reservation:
+  - text: "Votre réservation a été annulée avec succès."
+
+  utter_deny_cancel_reservation:
+  - text: "Votre réservation n'a pas été annulée."
+
+  utter_ask_number_reservation:
+  - text: "Veuillez me donner votre numéro de réservation."
+
+
+actions:
+  - action_validate_reservation_number
+  - action_cancel_reservation
 
 session_config:
   session_expiration_time: 60

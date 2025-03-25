@@ -5,53 +5,194 @@ nlu:
 - lookup: city
   examples: |
     - Paris
-    - Lyon
     - Marseille
-    - Bordeaux
-    - Nice
+    - Lyon
     - Toulouse
+    - Nice
     - Nantes
     - Strasbourg
     - Montpellier
+    - Bordeaux
     - Lille
     - Rennes
+    - Reims
+    - Le Havre
+    - Saint-Étienne
+    - Toulon
     - Grenoble
-    - Tours
-    - Nîmes
-    - Angers
     - Dijon
-    - Arnac-la-Poste
-    - Saint-Pierre
+    - Angers
+    - Nîmes
+    - Villeurbanne
+    - Clermont-Ferrand
+    - Le Mans
     - Aix-en-Provence
     - Brest
-    - Reims
-    - Le Mans
-    - Le Havre
-    - Clermont-Ferrand
-    - Toulon
-    - Caen
-    - Amiens
-    - Rouen
     - Limoges
-    - Nancy
+    - Tours
+    - Amiens
     - Metz
     - Perpignan
-    - Orléans
     - Besançon
+    - Orléans
     - Mulhouse
+    - Rouen
+    - Caen
+    - Nancy
+    - Saint-Denis
+    - Argenteuil
+    - Montreuil
+    - Roubaix
+    - Avignon
+    - Tourcoing
+    - Poitiers
+    - Nanterre
+    - Créteil
+    - Versailles
+    - Pau
+    - Courbevoie
+    - Vitry-sur-Seine
+    - Colombes
+    - Asnières-sur-Seine
+    - Aix-les-Bains
+    - Boulogne-sur-Mer
+    - Charleville-Mézières
+    - Clermont-Ferrand
+    - La Roche-sur-Yon
+    - Villeneuve-d'Ascq
+    - Saint-Étienne-du-Rouvray
+    - Le Blanc-Mesnil
+    - Saint-Germain-en-Laye
+    - Mont-Saint-Aignan
+    - Le Petit-Quevilly
+    - Fontenay-sous-Bois
+    - Rueil-Malmaison
+    - La Seyne-sur-Mer
+    - Les Sables-d'Olonne
+    - Villeneuve-Saint-Georges
+    - Châlons-en-Champagne
+    - La Garde
+    - Le Creusot
+    - Saint-Laurent-du-Var
+    - Saint-Ouen-sur-Seine
+    - La Courneuve
+    - La Ciotat
+    - Le Plessis-Robinson
+    - Le Cannet
+    - Saint-Jean-de-Luz
+    - Saint-Raphaël
+    - La Trinité
+    - Champigny-sur-Marne
+    - Vitry-le-François
+    - La Bazouge du desert
+    - La-Bazouge-du-desert
+    - Louvigné du desert
+    - Louvigné-du-desert
+    - Le Mans
+    - La Rochelle
+    - Les Herbiers
+    - La Ciotat
+    - Le Puy
+    - Le Grau du Roi
+    - La Teste
+    - La Flèche
+    - Le Creusot
+    - La Grande Motte
+    - La Trinité
+    - Le Luc
+    - La Ferté
+    - La Garde
+    - Le Vigan
+    - La Riche
+    - Le Relecq Kerhuon
+    - Le Barcarès
+    - La Farlède
+    - La Fare
+    - La Garenne Colombes
+    - La Salvetat
+    - Le Beausset
+    - La Bouilladisse
+    - La Celle
+    - La Colle sur Loup
+    - Le Castellet
+    - Le Monastier
+    - La Ferté Macé
+    - Le Bouscat
+    - La Chapelle
+    - La Côte Saint André
+    - Le Palais
+    - La Croix Valmer
+    - La Londe
+    - La Motte Servolex
+    - Le Pontet
+    - La Queue en Brie
+    - Le Tampon
+    - La Seyne
+    - La Tranche sur Mer
+    - La Ville du Bois
+    - La Verpillière
+    - La Mure
+    - La Souterraine
+    - Le Blanc
+    - Le Teil
+    - La Ferté Bernard
+    - La Chapelle Saint Mesmin
+    - Le Péage de Roussillon
 
-- regex: city
-  examples: |
-    - ([A-ZÉÈ][a-zéèêàç]+(?:[\s-][A-ZÉÈ][a-zéèêàç]+)*)
+
 
 - lookup: date
   examples: |
-    - 12/03/2021
-    - 12 mars
-    - lundi 12 mars
-    - demain
-    - 5 mars
-    - le 1er avril
+    - 03/01/2020
+    - 14-02-2021
+    - 25.03.2022
+    - 06 04 2023
+    - 2024/05/07
+    - 2025-06-08
+    - 2026.07.09
+    - 10 août 2027
+    - 11-Sep-2028
+    - 12/10/2029
+    - 13/11/2030 à 14:00
+    - 14/12/2031 00:00
+    - 2032-01-15T12:30:00
+    - 16/02/2033 11:59 PM
+    - 17/03/2034 (Printemps)
+    - 18/04/2035 - Anniv
+    - Mardi 19/05/2036
+    - Mercredi 20/06/2037
+    - Jeudi 21/07/2038
+    - Vendredi 22/08/2039
+    - Samedi 23/09/2040
+    - Dimanche 24/10/2041
+    - 25-Nov-2042
+    - 26/12/2043
+    - 27.01.2044 à 18:00
+    - 2045/02/28 07:45
+    - 29.03.2046
+    - 30-04-2047
+    - 01/05/2048 09:00
+    - 02/06/2049
+    - 03/07/2050
+    - 04/08/2051
+    - 05/09/2052
+    - 06/10/2053
+    - 07/11/2054
+    - 08/12/2055
+    - 09-Jan-2056
+    - 10 février 2057
+    - 11 mars 2058
+    - 12 avril 2059
+    - 13 mai 2060
+    - 14 juin 2061
+    - 15 juillet 2062
+    - 16 août 2063
+    - 17 septembre 2064
+    - 18 octobre 2065
+    - 19 novembre 2066
+    - 20 décembre 2067
+    - 21/01/2068
+    - 22.02.2069
 
 - intent: greet
   examples: |
@@ -118,7 +259,56 @@ nlu:
     - le [12/03/2021](date)
     - le 12 mars(date)
     - lundi 12 mars(date)
-    - du [5 au 10 mars 2021](date)
+    - Je voudrais réserver pour le [10/02/2024](date).
+    - Est-ce que vous avez une chambre le [15/03/2025](date) ?
+    - On peut fixer le rendez-vous au [01/04/2023](date) ?
+    - J’aimerais séjourner à l’hôtel le [20/06/2022](date).
+    - Je suis dispo à partir du [05/07/2026](date).
+    - Le [09/11/2023](date) me conviendrait parfaitement.
+    - Je pensais à une date comme le [12/08/2027](date).
+    - Réservation souhaitée pour le [03/09/2021](date).
+    - Ce sera pour le [17/10/2024](date), merci.
+    - On partira le [22/01/2025](date).
+    - Pouvez-vous réserver une table pour le [30/05/2023](date) ?
+    - Mon arrivée est prévue le [08/12/2024](date).
+    - Je compte venir le [04/06/2026](date).
+    - La date idéale serait le [11/07/2022](date).
+    - On fait ça le [14/02/2029](date) ?
+    - Ce serait parfait le [26/03/2023](date).
+    - Le [05/04/2024](date), est-ce libre ?
+    - On peut décaler au [19/05/2027](date) ?
+    - Mon départ serait le [28/08/2028](date).
+    - J’ai pensé au [07/09/2030](date).
+    - On se retrouve le [02/10/2031](date) ?
+    - Je choisis le [06/11/2029](date).
+    - On prévoit ça pour le [01/12/2032](date).
+    - La meilleure date serait le [13/01/2033](date).
+    - Je partirai le [25/02/2034](date).
+    - Réserve-moi une chambre pour le [29/03/2035](date).
+    - On va réserver pour le [23/04/2036](date).
+    - Merci de noter le [09/05/2037](date).
+    - Le séjour commence le [16/06/2038](date).
+    - Mon choix : le [21/07/2039](date).
+    - J’aimerais programmer ça au [18/08/2040](date).
+    - Est-ce possible le [24/09/2041](date) ?
+    - Je veux venir le [10/10/2042](date).
+    - On peut bloquer le [31/11/2043](date) ?
+    - Ce sera pour le [27/12/2044](date).
+    - Arrivée prévue le [07/01/2045](date).
+    - Fixons ça au [03/02/2046](date).
+    - Merci de valider le [15/03/2047](date).
+    - Ma date de choix est le [06/04/2048](date).
+    - On confirme pour le [12/05/2049](date).
+    - Je préfère le [22/06/2050](date).
+    - Bloquons le [20/07/2051](date).
+    - On y va le [01/08/2052](date).
+    - Réservez pour le [09/09/2053](date).
+    - L’événement aura lieu le [14/10/2054](date).
+    - Ce sera disponible le [11/11/2055](date) ?
+    - On pourrait faire ça le [19/12/2056](date).
+    - La réunion est prévue pour le [13/01/2057](date).
+    - Je suis libre le [17/02/2058](date).
+    - Le départ est fixé au [08/03/2059](date).
 
 - intent: book_hotel_location
   examples: |
@@ -131,5 +321,75 @@ nlu:
     - à [Strasbourg](city)
     - à [Montpellier](city)
     - à [Lille](city)
+    - Je voudrais réserver à [Paris](city).
+    - Ce serait pour une chambre à [Lyon](city).
+    - Je cherche un hôtel à [Marseille](city).
+    - J’aimerais séjourner à [Bordeaux](city).
+    - La réservation est pour [Nice](city).
+    - Est-ce possible d’avoir une chambre à [Toulouse](city) ?
+    - Je veux réserver dans la ville de [Nantes](city).
+    - On va dire [Strasbourg](city), s’il y a de la place.
+    - Je pense à [Montpellier](city) pour ce séjour.
+    - Ce serait à [Lille](city), merci.
+    - Je souhaite une chambre à [Rennes](city).
+    - Ce sera pour [Grenoble](city).
+    - J’aimerais réserver à [Dijon](city).
+    - La ville, ce sera [Angers](city).
+    - Je vais à [Reims](city), donc là-bas.
+    - Est-ce que vous avez quelque chose à [Clermont-Ferrand](city) ?
+    - Ce serait dans le coin de [Le Havre](city).
+    - On part pour [Aix-en-Provence](city).
+    - Je pensais à un hôtel à [Le Mans](city).
+    - Direction [Saint-Étienne](city), je veux y réserver.
+    - Réservation à faire pour [Limoges](city).
+    - C’est pour un séjour à [Perpignan](city).
+    - Je vais aller à [Orléans](city).
+    - Je préfère [Metz](city).
+    - Ce sera à [Besançon](city).
+    - Avez-vous des disponibilités à [Rouen](city) ?
+    - L’hôtel est pour [Caen](city).
+    - Je pars en week-end à [Nîmes](city).
+    - Une chambre à [Poitiers](city), s’il vous plaît.
+    - On va à [Mulhouse](city).
+    - J’ai besoin d’une chambre à [Troyes](city).
+    - Je souhaite réserver à [Annecy](city).
+    - Mon voyage est prévu à [Avignon](city).
+    - Je vais passer quelques jours à [Pau](city).
+    - Je serai à [Bayonne](city) cette semaine.
+    - On cherche quelque chose à [La Rochelle](city).
+    - Ce serait pour [Chambéry](city).
+    - J'aimerais dormir à [Colmar](city).
+    - On compte aller à [Narbonne](city).
+    - Est-ce possible d’avoir une chambre à [Valence](city) ?
+    - Je suis en déplacement à [Tours](city).
+    - Je vais à [Ajaccio](city).
+    - Ce sera pour un séjour à [Tarbes](city).
+    - Je cherche une chambre sur [Albi](city).
+    - On souhaite réserver à [Vannes](city).
+    - [Blois](city), si c’est disponible.
+    - Réservez-moi à [Chartres](city), merci.
+    - Est-ce que vous avez quelque chose à [Brive-la-Gaillarde](city) ?
+    - Mon hôtel sera à [Chalon-sur-Saône](city).
+    - Je pars à [Saint-Malo](city) cette fois.
 
-  
+
+- intent: cancel_reservation
+  examples: |
+    - annuler ma réservation
+    - je veux annuler ma réservation
+    - annuler
+    - je veux annuler
+    - supprimer ma réservation
+    - je souhaite annuler ma réservation
+
+
+- intent: provide_number_reservation
+  examples: |
+    - mon numéro est [1234](number_reservation)
+    - voici mon numéro : [5678](number_reservation)
+    - [9012](number_reservation)
+    - le numéro est le [3456](number_reservation)
+    - c'est le [7890](number_reservation)
+    - numéro [2345](number_reservation)
+    - réservation numéro [6789](number_reservation)
+    - [0123](number_reservation) est mon numéro

@@ -10,7 +10,7 @@ stories:
   - action: utter_ask_hotel_time
   - intent: book_hotel_time
     entities:
-    - date: "dans 2 jours"
+    - date: "le 12/03/2021"
   - action: utter_ask_hotel_location
   - intent: book_hotel_location
     entities:
@@ -18,3 +18,55 @@ stories:
   - action: utter_ask_hotel_summary
   - intent: affirm
   - action: utter_booked_hotel
+
+
+- story: cancel reservation - number reservation valid - affirm cancel
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: cancel_reservation
+  - action: utter_ask_number_reservation
+  - intent: provide_number_reservation
+    entities:
+    - number_reservation: "1234"
+  - action: action_validate_reservation_number
+  - slot_was_set:
+      - reservation_valid: true
+  - action: utter_confirm_cancel_reservation
+  - intent: affirm
+  - action: action_cancel_reservation
+  - action: utter_cancel_reservation
+
+- story: cancel reservation - number reservation valid - deny cancel
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: cancel_reservation
+  - action: utter_ask_number_reservation
+  - intent: provide_number_reservation
+    entities:
+    - number_reservation: "1234"
+  - action: action_validate_reservation_number
+  - slot_was_set:
+      - reservation_valid: true
+  - action: utter_confirm_cancel_reservation
+  - intent: deny
+  - action: utter_deny_cancel_reservation
+
+- story: cancel reservation - numéro invalide
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: cancel_reservation
+  - action: utter_ask_number_reservation
+  - intent: provide_number_reservation
+    entities:
+    - number_reservation: "999"
+  - action: action_validate_reservation_number
+  - slot_was_set:
+      - reservation_valid: false
+  - action: utter_ask_number_reservation
+
+
+  
+  

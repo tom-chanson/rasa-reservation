@@ -15,7 +15,6 @@ pipeline:
 # # If you'd like to customize it, uncomment and adjust the pipeline.
 # # See https://rasa.com/docs/rasa/tuning-your-model for more information.
   - name: WhitespaceTokenizer
-  - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
   - name: CountVectorsFeaturizer
@@ -35,6 +34,12 @@ pipeline:
   - name: RegexEntityExtractor
     case_sensitive: False
     use_lookup_tables: True
+  - name: RegexFeaturizer
+    case_sensitive: false
+  - name: RegexEntityExtractor
+    case_sensitive: false
+    patterns:
+      number_reservation: '[0-9]{4}'
 
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/
