@@ -1,0 +1,52 @@
+version: "3.1"
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: sad path 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye
+
+- story: ask weather
+  steps:
+  - intent: ask_weather
+  - action: utter_ask_weather
+
+- story: hotel booking path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: book_hotel
+  - action: utter_ask_hotel_time
+  - intent: book_hotel_time
+    entities:
+    - date: "dans 2 jours"
+  - action: utter_ask_hotel_location
+  - intent: book_hotel_location
+    entities:
+    - city: "Geneston"
+  - action: utter_ask_hotel_summary
+  - intent: affirm
+  - action: utter_booked_hotel

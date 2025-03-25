@@ -1,0 +1,181 @@
+version: "3.1"
+
+nlu:
+
+- lookup: city
+  examples: |
+    - Paris
+    - Lyon
+    - Marseille
+    - Bordeaux
+    - Nice
+    - Toulouse
+    - Nantes
+    - Strasbourg
+    - Montpellier
+    - Lille
+    - Rennes
+    - Grenoble
+    - Tours
+    - Nîmes
+    - Angers
+    - Dijon
+    - Arnac-la-Poste
+    - Saint-Pierre
+    - Aix-en-Provence
+    - Brest
+    - Reims
+    - Le Mans
+    - Le Havre
+    - Clermont-Ferrand
+    - Toulon
+    - Caen
+    - Amiens
+    - Rouen
+    - Limoges
+    - Nancy
+    - Metz
+    - Perpignan
+    - Orléans
+    - Besançon
+    - Mulhouse
+
+- lookup: date
+  examples: |
+    - 12/03/2021
+    - 12 mars
+    - lundi 12 mars
+    - 5 au 10 mars 2021
+    - 5 mars
+    - dans 2 jours
+    - la semaine prochaine
+    - le mois prochain
+    - le 1er avril
+
+- intent: greet
+  examples: |
+    - salut
+    - bonjour
+    - coucou
+    - bonsoir
+    - salut toi
+    - allons-y
+    - salut mon pote
+    - bon matin
+    - bonsoir
+    - bonne après-midi
+    - slt
+
+- intent: goodbye
+  examples: |
+    - au revoir
+    - bonne nuit
+    - bye
+    - au revoir
+    - bonne journée
+    - bye bye
+
+- intent: affirm
+  examples: |
+    - oui
+    - ouais
+    - en effet
+    - bien sûr
+    - ça me va
+    - correct
+    - exactement
+
+- intent: deny
+  examples: |
+    - non
+    - pas du tout
+    - jamais
+    - je ne pense pas
+    - je n'aime pas ça
+    - pas question
+    - pas vraiment
+
+- intent: mood_great
+  examples: |
+    - parfait
+    - super
+    - incroyable
+    - je me sens comme un roi
+    - merveilleux
+    - je me sens très bien
+    - je vais super bien
+    - je suis incroyable
+    - je vais sauver le monde
+    - je suis ravi
+    - extrêmement bien
+    - tellement parfait
+    - vraiment bien
+    - tout est parfait
+
+- intent: mood_unhappy
+  examples: |
+    - ma journée était horrible
+    - je suis triste
+    - je ne me sens pas très bien
+    - je suis déçu
+    - super triste
+    - je suis si triste
+    - triste
+    - très triste
+    - malheureux
+    - pas bien
+    - pas très bien
+    - extrêmement triste
+    - tellement triste
+    - si triste
+
+- intent: bot_challenge
+  examples: |
+    - es-tu un bot ?
+    - es-tu un humain ?
+    - est-ce que je parle à un bot ?
+    - est-ce que je parle à un humain ?
+
+- intent: ask_weather
+  examples: |
+    - quel temps fait-il ?
+    - quelle est la météo aujourd'hui ?
+    - quel temps fera-t-il ?
+    - météo
+    - donne-moi la météo
+    - j'aimerais connaître la météo
+    - dis-moi quel temps il fait
+    - il fait beau ?
+    - il va pleuvoir ?
+    - température d'aujourd'hui
+
+- intent: book_hotel
+  examples: |
+    - je veux réserver un hôtel
+    - réserver un hôtel
+    - je veux réserver une chambre
+    - réserver une chambre
+    - hotel
+
+- intent: book_hotel_time
+  examples: |
+    - je veux réserver une chambre pour le [12/03/2021](date)
+    - [12/03/2021](date)
+    - le [12/03/2021](date)
+    - le 12 mars(date)
+    - lundi 12 mars(date)
+    - du [5 au 10 mars 2021](date)
+
+- intent: book_hotel_location
+  examples: |
+    - je veux réserver une chambre à [Paris](city)
+    - [Lyon](city)
+    - Je veux réserver à [Marseille](city)
+    - ça sera à [Nice](city)
+    - à [Toulouse](city)
+    - à [Nantes](city)
+    - à [Strasbourg](city)
+    - à [Montpellier](city)
+    - à [Lille](city)
+
+  

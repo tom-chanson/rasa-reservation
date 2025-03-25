@@ -1,0 +1,44 @@
+# Rasa specific
+.rasa/
+models/
+results/
+/graph.html
+
+# Python specific
+*.py[cod]
+__pycache__/
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+.env/
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# OS specific
+.DS_Store
+Thumbs.db

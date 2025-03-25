@@ -1,0 +1,75 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - ask_weather
+  - book_hotel
+  - book_hotel_time
+  - book_hotel_location
+
+entities:
+  - date
+  - city
+
+slots:
+  city:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: city
+  
+  date:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: date
+
+responses:
+  utter_greet:
+  - text: "Salut ! Comment allez-vous ?"
+
+  utter_cheer_up:
+  - text: "Voici quelque chose pour vous remonter le moral :"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+  - text: "Est-ce que cela vous a aidé ?"
+
+  utter_happy:
+  - text: "Super, continuez comme ça !!"
+
+  utter_goodbye:
+  - text: "Au revoir"
+
+  utter_iamabot:
+  - text: "Je suis un bot qui va renverser le monde 🤖"
+
+  utter_ask_weather:
+  - text: "Voici la météo d'aujourd'hui : Ensoleillé avec quelques nuages, 22°C"
+  - text: "Aujourd'hui il fait beau avec une température de 20°C"
+  - text: "Le temps est variable aujourd'hui, prévoyez un parapluie par précaution"
+
+  utter_hello_ask_help:
+  - text: "Bonjour, comment puis-je vous aider ?"
+
+  utter_ask_hotel_time:
+  - text: "Quand souhaitez-vous réserver votre chambre d'hôtel ?"
+
+  utter_ask_hotel_location:
+  - text: "Dans quelle ville souhaitez-vous réserver votre chambre d'hôtel ?"
+
+  utter_ask_hotel_summary:
+  - text: "Résumé de votre réservation : Vous souhaitez réservé une chambre à {city} à la date {date}. Confirmez-vous ?"
+
+  utter_booked_hotel:
+  - text: "Votre chambre d'hôtel a bien été réservée."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
