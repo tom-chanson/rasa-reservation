@@ -35,7 +35,6 @@ stories:
   - action: utter_confirm_cancel_reservation
   - intent: affirm
   - action: action_cancel_reservation
-  - action: utter_cancel_reservation
 
 - story: cancel reservation - number reservation valid - deny cancel
   steps:

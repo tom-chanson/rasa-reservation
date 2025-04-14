@@ -65,7 +65,7 @@ responses:
   - text: "Votre chambre d'hôtel a bien été réservée."
 
   utter_confirm_cancel_reservation:
-  - text: "Voulez-vous vraiment annuler votre réservation ?"
+  - text: "Voulez-vous vraiment annuler votre réservation numéro {number_reservation} ?"
 
   utter_cancel_reservation:
   - text: "Votre réservation a été annulée avec succès."
