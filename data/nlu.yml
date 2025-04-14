@@ -393,3 +393,34 @@ nlu:
     - numéro [2345](number_reservation)
     - réservation numéro [6789](number_reservation)
     - [0123](number_reservation) est mon numéro
+
+- intent: ask_menu_of_the_day
+  examples: |
+    - quel est le menu du jour ?
+    - quel est le plat du jour ?
+    - que proposez-vous aujourd'hui ?
+    - quels sont les plats du jour ?
+    - quels sont les menus du jour ?
+    - quel est le menu aujourd'hui ?
+    - quel est le plat du jour aujourd'hui ?
+    - menu du jour
+    - plat du jour
+    - quel est le menu du jour ?
+    - qu'est-ce qu'il y a au menu aujourd'hui ?
+    - menu du jour
+    - qu'est-ce que vous proposez aujourd'hui ?
+    - quels sont les plats du jour ?
+    - qu'est-ce qu'on mange aujourd'hui ?
+
+- intent: ask_menu
+  examples: |
+    - quel est le menu ?
+    - quel est la carte ?
+    - quels sont les plats ?
+    - que proposez-vous ?
+    - quels sont les plats ?
+    - carte
+    - menu
+    - carte des plats
+    - carte des menus
+    - carte des mets

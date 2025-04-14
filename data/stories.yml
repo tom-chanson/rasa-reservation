@@ -66,6 +66,18 @@ stories:
       - reservation_valid: false
   - action: utter_ask_number_reservation
 
+- story: ask menu of the day
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_menu_of_the_day
+  - action: action_menu_of_day
 
-  
+
+- story: ask menu
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ask_menu
+  - action: utter_menu
   

@@ -9,6 +9,8 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet, FollowupAction
+import requests
+import random
 
 
 class ActionValidateReservationNumber(Action):
@@ -59,4 +61,33 @@ class ActionCancelReservation(Action):
         reservation_number = tracker.get_slot("number_reservation")
         # TODO: supprimer la réservation en base
         dispatcher.utter_message(text=f"La réservation {reservation_number} a été annulée.")
+        return []
+    
+class ActionAskMenuOfDay(Action):
+    """
+    Action pour demander le menu du jour
+    """
+    def name(self) -> Text:
+        return "action_menu_of_day"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        # exécuter une requête vers 'https://dummyjson.com/recipes/tag/Italian'
+
+        try:
+            responseMenu = requests.get('https://dummyjson.com/recipes/tag/Italian')
+            dataMenu = responseMenu.json()
+            menuSelect = random.choice(dataMenu['recipes'])
+            print(menuSelect)
+
+            responseDessert = requests.get('https://dummyjson.com/recipes/meal-type/Dessert')
+            dataDessert = responseDessert.json()
+            dessertSelect = random.choice(dataDessert['recipes'])
+
+            menu = f"Plat du jour : {menuSelect['name']}\nIngrédients : {', '.join(menuSelect['ingredients'])}\n\nDessert du jour : {dessertSelect['name']}\nIngrédients : {', '.join(dessertSelect['ingredients'])}"
+            dispatcher.utter_message(text=f"Voici le menu du jour :\n{menu}")
+        except requests.exceptions.RequestException as e:
+            dispatcher.utter_message(text="Désolé, je n'ai pas pu récupérer le menu du jour.")
+            print(f"Erreur lors de la récupération du menu : {e}")
         return []

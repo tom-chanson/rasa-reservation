@@ -11,6 +11,8 @@ intents:
   - book_hotel_location
   - cancel_reservation
   - provide_number_reservation
+  - ask_menu_of_the_day
+  - ask_menu
 
 
 entities:
@@ -67,19 +69,23 @@ responses:
   utter_confirm_cancel_reservation:
   - text: "Voulez-vous vraiment annuler votre réservation numéro {number_reservation} ?"
 
-  utter_cancel_reservation:
-  - text: "Votre réservation a été annulée avec succès."
-
   utter_deny_cancel_reservation:
   - text: "Votre réservation n'a pas été annulée."
 
   utter_ask_number_reservation:
   - text: "Veuillez me donner votre numéro de réservation."
 
+  utter_menu:
+  - text: "Cliquez sur le lien pour voir le menu du jour : http://www.lumberjackpizza.fr/wafx_res/Files/Flyer%20Nantes-2.jpg"
+  - text: "Cliquez ici: http://www.lumberjackpizza.fr/wafx_res/Files/Flyer%20Nantes-2.jpg"
+  - text: "Lien vers la carte: http://www.lumberjackpizza.fr/wafx_res/Files/Flyer%20Nantes-2.jpg"
+  - text: "Cliquer ici pour accéder à la http://www.lumberjackpizza.fr/wafx_res/Files/Flyer%20Nantes-2.jpg"
+  - text: "Cliquez sur le lien pour voir le menu du jour : http://perdu.com/"
 
 actions:
   - action_validate_reservation_number
   - action_cancel_reservation
+  - action_menu_of_day
 
 session_config:
   session_expiration_time: 60
