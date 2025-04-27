@@ -34,7 +34,6 @@ Le schéma est dispo ici :
 
 ![ Schéma ](assets/asset_routes-rasa.png)
 
-
 ## 🎥 Démo du scénario
 
 Voici une démo pour la réservation sans commentaires : 
