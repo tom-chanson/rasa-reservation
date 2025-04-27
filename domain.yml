@@ -13,12 +13,41 @@ intents:
   - provide_number_reservation
   - ask_menu_of_the_day
   - ask_menu
+  - book_hotel_summary
+  - book_restaurant
+  - book_restaurant_date
+  - book_restaurant_hour 
+  - book_restaurant_time
+  - book_restaurant_persons
+  - book_restaurant_reservation_name
+  - book_restaurant_phone_number
+  - book_restaurant_comment
+  - book_restaurant_summary
+  - book_restaurant_final
 
+  - say_hello
 
 entities:
   - date
   - city
   - number_reservation
+  - rest_date
+  - rest_hour
+  - persons
+  - name
+  - phone_number
+  - comment
+
+actions:
+  - action_save_reservation
+  - action_hello_world
+  - action_insert_test
+  - action_get_reservations
+  - action_validate_reservation_number
+  - action_cancel_reservation
+  - action_menu_of_day
+  - action_check_and_handle_reservation
+  - action_update_comment_reservation
 
 slots:
   city:
@@ -32,17 +61,54 @@ slots:
     mappings:
     - type: from_entity
       entity: date
+  
+  rest_hour:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: rest_hour
+  
+  persons:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: persons
+
+  name:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: name
+
+  rest_date:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: rest_date
 
   number_reservation:
     type: text
     mappings:
     - type: from_entity
       entity: number_reservation
+
+  phone_number:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: phone_number
+  
+  comment:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: comment
   
   reservation_valid:
     type: bool
     mappings:
     - type: custom
+
 
 responses:
   utter_greet:
@@ -66,6 +132,33 @@ responses:
   utter_booked_hotel:
   - text: "Votre chambre d'hôtel a bien été réservée."
 
+  utter_ask_restaurant_date:
+  - text: "Quand souhaitez-vous réserver votre table au restaurant ?"
+
+  utter_booked_restaurant_hour:
+  - text: "A quelle heure souhaitez-vous réserver votre table au restaurant ?"
+
+  utter_ask_restaurant_time:
+  - text: "A quelle date souhaitez-vous réserver votre table au restaurant ?"
+
+  utter_booked_restaurant_persons:
+  - text: "Pour combien de personnes souhaitez-vous réserver votre table au restaurant ?"
+
+  utter_booked_restaurant_name:
+  - text: "Sous quel nom souhaitez-vous réserver votre table au restaurant ?"
+
+  utter_booked_restaurant_summary_with_comment:
+  - text: "Résumé de votre réservation : Vous souhaitez réserver une table au restaurant pour {persons} à la date {rest_date} à l'heure {rest_hour} sous le nom de {name} avec le numéro de téléphone {phone_number} et le commentaire suivant : {comment}. Confirmez-vous ?"
+
+  utter_booked_restaurant_summary_without_comment:
+  - text: "Résumé de votre réservation : Vous souhaitez réserver une table au restaurant pour {persons} à la date {rest_date} à l'heure {rest_hour} sous le nom de {name} avec le numéro de téléphone {phone_number} sans commentaires. Confirmez-vous ?"
+
+  utter_deny_book_restaurant:
+  - text: "Votre réservation n'a pas été enregistrée."
+  
+  utter_booked_restaurant_final:
+  - text: "Votre réservation au restaurant a bien été enregistrée."
+  
   utter_confirm_cancel_reservation:
   - text: "Voulez-vous vraiment annuler votre réservation numéro {number_reservation} ?"
 
@@ -75,17 +168,27 @@ responses:
   utter_ask_number_reservation:
   - text: "Veuillez me donner votre numéro de réservation."
 
+  utter_booked_restaurant_phone_number:
+  - text: "Quel est votre numéro de téléphone ?"
+
+  utter_booked_restaurant_comment:
+  - text: "Avez-vous un commentaire à ajouter à votre réservation ?"
+
+  utter_ask_new_comment:
+  - text: "Quel nouveau commentaire souhaitez-vous ajouter à votre réservation ?"
+
+  utter_booked_restaurant_add_comment:
+  - text: "Souhaitez-vous ajouter un commentaire à votre réservation ?"
+
+  utter_ask_validate_modification:
+    - text: "Souhaitez-vous valider la modification de votre réservation ?"
+
   utter_menu:
   - text: "Cliquez sur le lien pour voir le menu du jour : http://www.lumberjackpizza.fr/wafx_res/Files/Flyer%20Nantes-2.jpg"
   - text: "Cliquez ici: http://www.lumberjackpizza.fr/wafx_res/Files/Flyer%20Nantes-2.jpg"
   - text: "Lien vers la carte: http://www.lumberjackpizza.fr/wafx_res/Files/Flyer%20Nantes-2.jpg"
   - text: "Cliquer ici pour accéder à la http://www.lumberjackpizza.fr/wafx_res/Files/Flyer%20Nantes-2.jpg"
   - text: "Cliquez sur le lien pour voir le menu du jour : http://perdu.com/"
-
-actions:
-  - action_validate_reservation_number
-  - action_cancel_reservation
-  - action_menu_of_day
 
 session_config:
   session_expiration_time: 60

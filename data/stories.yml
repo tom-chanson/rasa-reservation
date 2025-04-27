@@ -2,24 +2,6 @@ version: "3.1"
 
 stories:
 
-- story: hotel booking path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: book_hotel
-  - action: utter_ask_hotel_time
-  - intent: book_hotel_time
-    entities:
-    - date: "le 12/03/2021"
-  - action: utter_ask_hotel_location
-  - intent: book_hotel_location
-    entities:
-    - city: "Geneston"
-  - action: utter_ask_hotel_summary
-  - intent: affirm
-  - action: utter_booked_hotel
-
-
 - story: cancel reservation - number reservation valid - affirm cancel
   steps:
   - intent: greet
@@ -73,7 +55,6 @@ stories:
   - intent: ask_menu_of_the_day
   - action: action_menu_of_day
 
-
 - story: ask menu
   steps:
   - intent: greet
@@ -81,3 +62,173 @@ stories:
   - intent: ask_menu
   - action: utter_menu
   
+- story: restaurant booking path with comment - user accepts
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: book_restaurant
+  - action: utter_ask_restaurant_time
+  - intent: book_restaurant_time
+    entities:
+    - rest_date: "le 12/03/2021"
+  - action: utter_booked_restaurant_hour
+  - intent: book_restaurant_hour
+    entities:
+    - rest_hour: "à 20h"
+  - action: utter_booked_restaurant_persons
+  - intent: book_restaurant_persons
+    entities:
+    - persons: "pour 4 personnes"
+  - action: utter_booked_restaurant_name
+  - intent: book_restaurant_reservation_name
+    entities:
+    - name: "Tom"
+  - action: utter_booked_restaurant_phone_number
+  - intent: book_restaurant_phone_number
+    entities:
+    - phone_number: "0612345678"
+  - action : utter_booked_restaurant_add_comment
+  - intent: affirm
+  - action: utter_booked_restaurant_comment
+  - intent: book_restaurant_comment
+    entities:
+    - comment: "pour une occasion spéciale"
+  - action: utter_booked_restaurant_summary_with_comment
+  - intent: affirm
+  - action: action_save_reservation
+
+- story: restaurant booking path without comment - user accepts
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: book_restaurant
+  - action: utter_ask_restaurant_time
+  - intent: book_restaurant_time
+    entities:
+    - rest_date: "le 12/03/2021"
+  - action: utter_booked_restaurant_hour
+  - intent: book_restaurant_hour
+    entities:
+    - rest_hour: "à 20h"
+  - action: utter_booked_restaurant_persons
+  - intent: book_restaurant_persons
+    entities:
+    - persons: "pour 4 personnes"
+  - action: utter_booked_restaurant_name
+  - intent: book_restaurant_reservation_name
+    entities:
+    - name: "Tom"
+  - action: utter_booked_restaurant_phone_number
+  - intent: book_restaurant_phone_number
+    entities:
+    - phone_number: "0612345678"
+  - action : utter_booked_restaurant_add_comment
+  - intent: deny
+  - action: utter_booked_restaurant_summary_without_comment
+  - intent: affirm
+  - action: action_save_reservation
+
+- story: restaurant booking path with comment - user deny
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: book_restaurant
+  - action: utter_ask_restaurant_time
+  - intent: book_restaurant_time
+    entities:
+    - rest_date: "le 12/03/2021"
+  - action: utter_booked_restaurant_hour
+  - intent: book_restaurant_hour
+    entities:
+    - rest_hour: "à 20h"
+  - action: utter_booked_restaurant_persons
+  - intent: book_restaurant_persons
+    entities:
+    - persons: "pour 4 personnes"
+  - action: utter_booked_restaurant_name
+  - intent: book_restaurant_reservation_name
+    entities:
+    - name: "Tom"
+  - action: utter_booked_restaurant_phone_number
+  - intent: book_restaurant_phone_number
+    entities:
+    - phone_number: "0612345678"
+  - action : utter_booked_restaurant_add_comment
+  - intent: affirm
+  - action: utter_booked_restaurant_comment
+  - intent: book_restaurant_comment
+    entities:
+    - comment: "pour une occasion spéciale"
+  - action: utter_booked_restaurant_summary_with_comment
+  - intent: deny
+  - action: utter_deny_book_restaurant
+
+- story: restaurant booking path without comment - user deny
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: book_restaurant
+  - action: utter_ask_restaurant_time
+  - intent: book_restaurant_time
+    entities:
+    - rest_date: "le 12/03/2021"
+  - action: utter_booked_restaurant_hour
+  - intent: book_restaurant_hour
+    entities:
+    - rest_hour: "à 20h"
+  - action: utter_booked_restaurant_persons
+  - intent: book_restaurant_persons
+    entities:
+    - persons: "pour 4 personnes"
+  - action: utter_booked_restaurant_name
+  - intent: book_restaurant_reservation_name
+    entities:
+    - name: "Tom"
+  - action: utter_booked_restaurant_phone_number
+  - intent: book_restaurant_phone_number
+    entities:
+    - phone_number: "0612345678"
+  - action : utter_booked_restaurant_add_comment
+  - intent: deny
+  - action: utter_booked_restaurant_summary_without_comment
+  - intent: deny
+  - action: utter_deny_book_restaurant
+
+- story: modify reservation comment
+  steps:
+  - intent: cancel_reservation
+  - action: utter_ask_number_reservation
+  - intent: provide_number_reservation
+  - action: action_validate_reservation_number
+  - slot_was_set:
+      - reservation_valid: false
+  - action: utter_ask_number_reservation
+
+- story: modify reservation comment - valid number
+  steps:
+  - intent: cancel_reservation
+  - action: utter_ask_number_reservation
+  - intent: provide_number_reservation
+  - action: action_validate_reservation_number
+  - slot_was_set:
+      - reservation_valid: true
+  - action: utter_ask_new_comment
+  - intent: book_restaurant_comment
+  - action: utter_ask_validate_modification
+  - intent: affirm
+  - action: action_update_comment_reservation
+  - action: utter_goodbye
+
+- story: modify reservation comment - user declines
+  steps:
+  - intent: cancel_reservation
+  - action: utter_ask_number_reservation
+  - intent: provide_number_reservation
+  - action: action_validate_reservation_number
+  - slot_was_set:
+      - reservation_valid: true
+  - action: utter_ask_new_comment
+  - intent: book_restaurant_comment
+  - action: utter_ask_validate_modification
+  - intent: deny
+  - action: utter_deny_cancel_reservation

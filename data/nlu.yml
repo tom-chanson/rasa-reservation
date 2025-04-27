@@ -139,8 +139,6 @@ nlu:
     - La Chapelle Saint Mesmin
     - Le Péage de Roussillon
 
-
-
 - lookup: date
   examples: |
     - 03/01/2020
@@ -193,6 +191,62 @@ nlu:
     - 20 décembre 2067
     - 21/01/2068
     - 22.02.2069
+
+- lookup: rest_date
+  examples: |
+    - 04/12/2021
+    - 21/10
+
+- lookup: rest_hour
+  examples: |
+    - 20h
+    - 12h
+
+- lookup: persons
+  examples: |
+    - 4 personnes
+    - 2 personnes
+    
+- lookup: name
+  examples: |
+    - Tom
+    - Alice
+    - Bob
+    - John
+    - Jane
+    - Mary
+    - Peter
+    - Paul
+    - Emma
+    - Jack
+    - Sarah
+    - David
+    - Laura
+    - Sophie
+    - Olivia
+    - William
+    - James
+    - Henry
+    - Charles
+    - George
+    - Edward
+    - Elizabeth
+    - Victoria
+    - Alexander
+    - Louis
+    - Arthur
+    - Frederick
+    - Albert
+
+- lookup: comment
+  examples: |
+    - Près des toilettes
+    - Avec vue sur la mer
+    - Pour une occasion spéciale
+    - Avec un gâteau d'anniversaire
+    - Pour un dîner romantique
+    - Pour un repas d'affaires
+    - Ammener nous des p***s
 
 - intent: greet
   examples: |
@@ -372,7 +426,6 @@ nlu:
     - Mon hôtel sera à [Chalon-sur-Saône](city).
     - Je pars à [Saint-Malo](city) cette fois.
 
-
 - intent: cancel_reservation
   examples: |
     - annuler ma réservation
@@ -382,17 +435,9 @@ nlu:
     - supprimer ma réservation
     - je souhaite annuler ma réservation
 
-
 - intent: provide_number_reservation
   examples: |
-    - mon numéro est [1234](number_reservation)
-    - voici mon numéro : [5678](number_reservation)
-    - [9012](number_reservation)
-    - le numéro est le [3456](number_reservation)
-    - c'est le [7890](number_reservation)
-    - numéro [2345](number_reservation)
     - réservation numéro [6789](number_reservation)
-    - [0123](number_reservation) est mon numéro
 
 - intent: ask_menu_of_the_day
   examples: |
@@ -424,3 +469,71 @@ nlu:
     - carte des plats
     - carte des menus
     - carte des mets
+
+- intent: book_restaurant
+  examples: |
+    - je veux réserver une table
+    - réserver une table
+    - je veux réserver une table au restaurant
+
+- intent: book_restaurant_time
+  examples: |
+    - [04/12/2025](rest_date)
+    - [21/10](rest_date)
+    - le [04/12/2025](rest_date)
+    - le [21/10](rest_date)
+    - demain [04/12/2025](rest_date)
+    - demain [21/10](rest_date)
+
+- intent: book_restaurant_hour
+  examples: |
+    - [20h](rest_hour)
+    - [12h](rest_hour)
+    - à [20h](rest_hour)
+    - à [12h](rest_hour)
+
+- intent: book_restaurant_persons
+  examples: |
+    - pour [4 personnes](persons)
+    - [4 personnes](persons)
+    - pour [2 personnes](persons)
+    - [2 personnes](persons)
+
+- intent: book_restaurant_reservation_name
+  examples: |
+    - sous le nom de [Tom](name)
+    - sous le nom de [Alice](name)
+    - sous le nom de [Bob](name)
+    - sous le nom de [John](name)
+    - sous le nom de [Jane](name)
+    - sous le nom de [Mary](name)
+    - sous le nom de [Peter](name)
+    - sous le nom de [Paul](name)
+    - sous le nom de [Emma](name)
+    - sous le nom de [Jack](name)
+    - [Tom](name)
+    - [Alice](name)
+    - [Bob](name)
+
+- intent: say_hello
+  examples: |
+    - dis bonjour
+    - dis bonjour au monde
+    - dis bonjour à tout le monde
+    - dis bonjour à tous
+    - dis bonjour à la terre
+    - dis bonjour à l'univers
+    - dis bonjour à la vie
+    - dis bonjour à l'humanité
+
+- intent: book_restaurant_phone_number
+  examples: |
+    - mon numéro est [0612345678](phone_number)
+    - le numéro est le [0612345678](phone_number)
+    - c'est le [0612345678](phone_number)
+    - numéro de téléphone [0612345678](phone_number)
+    - [0612345678](phone_number) est mon numéro de téléphone
+
+- regex: rest_date
+  examples: |
+    - \d{2}/\d{2}/\d{4}
