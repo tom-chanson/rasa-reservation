@@ -41,8 +41,6 @@ Voici une démo pour la réservation sans commentaires :
 ![Démo](./assets/demo_scenario.gif)
 
 ## 💡 Fonctionnalités principales
-
-- **Réservation d'un hôtel** : Ville et date
     
 - **Réservation d'un restaurant** : Date, heure, nombre de personnes, nom, téléphone
     
@@ -56,9 +54,9 @@ Voici une démo pour la réservation sans commentaires :
     
 - **Modification du commentaire d'une réservation existante**
 
-## 📊 Flux conversationnels couverts
+- **Consultation des informations de réservation** : date, heure, nombre de personnes, nom, téléphone
 
-- **Flux Hôtel** : Réserver une chambre
+## 📊 Flux conversationnels couverts
     
 - **Flux Restaurant** : Réserver une table (avec ou sans commentaire)
     
@@ -67,3 +65,11 @@ Voici une démo pour la réservation sans commentaires :
 - **Flux Modification** : Modifier un commentaire
     
 - **Flux Menu** : Consulter le menu du jour ou la carte
+
+- **Flux info** : Obtenir des informations sur sa réservation
+
+## Intégration dans Slack
+
+Pour des raisons de sécurité, les credentials de l'application Slack ne sont pas inclus dans le dépôt.
+
+![Slack Integration](assets/slack.gif)

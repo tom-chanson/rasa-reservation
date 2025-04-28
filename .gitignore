@@ -3,6 +3,7 @@
 models/
 results/
 /graph.html
+credentials.yml
 
 # Python specific
 *.py[cod]

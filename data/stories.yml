@@ -87,9 +87,12 @@ stories:
   - intent: book_restaurant_phone_number
     entities:
     - phone_number: "0612345678"
-  - action : utter_booked_restaurant_add_comment
+  - action: action_validate_phone_number
+  - slot_was_set:
+      - phone_valid: true
+  - action: utter_booked_restaurant_add_comment
   - intent: affirm
-  - action: utter_booked_restaurant_comment
+  - action: utter_ask_new_comment
   - intent: book_restaurant_comment
     entities:
     - comment: "pour une occasion spéciale"
@@ -122,7 +125,10 @@ stories:
   - intent: book_restaurant_phone_number
     entities:
     - phone_number: "0612345678"
-  - action : utter_booked_restaurant_add_comment
+  - action: action_validate_phone_number
+  - slot_was_set:
+      - phone_valid: true
+  - action: utter_booked_restaurant_add_comment
   - intent: deny
   - action: utter_booked_restaurant_summary_without_comment
   - intent: affirm
@@ -153,9 +159,12 @@ stories:
   - intent: book_restaurant_phone_number
     entities:
     - phone_number: "0612345678"
-  - action : utter_booked_restaurant_add_comment
+  - action: action_validate_phone_number
+  - slot_was_set:
+      - phone_valid: true
+  - action: utter_booked_restaurant_add_comment
   - intent: affirm
-  - action: utter_booked_restaurant_comment
+  - action: utter_ask_new_comment
   - intent: book_restaurant_comment
     entities:
     - comment: "pour une occasion spéciale"
@@ -188,7 +197,10 @@ stories:
   - intent: book_restaurant_phone_number
     entities:
     - phone_number: "0612345678"
-  - action : utter_booked_restaurant_add_comment
+  - action: action_validate_phone_number
+  - slot_was_set:
+      - phone_valid: true
+  - action: utter_booked_restaurant_add_comment
   - intent: deny
   - action: utter_booked_restaurant_summary_without_comment
   - intent: deny
@@ -196,7 +208,7 @@ stories:
 
 - story: modify reservation comment
   steps:
-  - intent: cancel_reservation
+  - intent: modify_reservation
   - action: utter_ask_number_reservation
   - intent: provide_number_reservation
   - action: action_validate_reservation_number
@@ -206,7 +218,7 @@ stories:
 
 - story: modify reservation comment - valid number
   steps:
-  - intent: cancel_reservation
+  - intent: modify_reservation
   - action: utter_ask_number_reservation
   - intent: provide_number_reservation
   - action: action_validate_reservation_number
@@ -214,6 +226,8 @@ stories:
       - reservation_valid: true
   - action: utter_ask_new_comment
   - intent: book_restaurant_comment
+    entities:
+    - comment: "pour une occasion spéciale"  
   - action: utter_ask_validate_modification
   - intent: affirm
   - action: action_update_comment_reservation
@@ -221,7 +235,7 @@ stories:
 
 - story: modify reservation comment - user declines
   steps:
-  - intent: cancel_reservation
+  - intent: modify_reservation
   - action: utter_ask_number_reservation
   - intent: provide_number_reservation
   - action: action_validate_reservation_number
@@ -231,4 +245,29 @@ stories:
   - intent: book_restaurant_comment
   - action: utter_ask_validate_modification
   - intent: deny
-  - action: utter_deny_cancel_reservation
+  - action: utter_deny_modify_reservation
+
+
+- story: show reservation details - valid number
+  steps:
+  - intent: show_reservation_details
+  - action: utter_ask_number_reservation
+  - intent: provide_number_reservation
+    entities:
+    - number_reservation: "1234"
+  - action: action_validate_reservation_number
+  - slot_was_set:
+      - reservation_valid: true
+  - action: action_show_reservation_details
+
+- story: show reservation details - invalid number
+  steps:
+  - intent: show_reservation_details
+  - action: utter_ask_number_reservation
+  - intent: provide_number_reservation
+    entities:
+    - number_reservation: "999"
+  - action: action_validate_reservation_number
+  - slot_was_set:
+      - reservation_valid: false
+  - action: utter_ask_number_reservation

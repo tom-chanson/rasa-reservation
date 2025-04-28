@@ -13,10 +13,11 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet, FollowupAction
 import requests
 import random
+import re
 
 class ActionSaveReservation(Action):
     """
-    Action to save reservation details in the SQLite database.
+    Action pour enregistrer une réservation
     """
 
     def name(self) -> Text:
@@ -62,7 +63,8 @@ class ActionSaveReservation(Action):
                 VALUES (?, ?, ?, ?, ?, ?)
             """, (rest_date, persons, rest_hour, name, phone_number, comment))
             connection.commit()
-            dispatcher.utter_message(text="Votre réservation a été enregistrée avec succès.")
+            reservation_id = cursor.lastrowid
+            dispatcher.utter_message(text=f"Votre réservation a été enregistrée avec succès. Votre numéro de réservation est: {reservation_id}")
         except Exception as e:
             dispatcher.utter_message(text=f"Une erreur est survenue lors de l'enregistrement : {e}")
         finally:
@@ -70,126 +72,6 @@ class ActionSaveReservation(Action):
 
         print(f"Reservation details: {rest_date}, {rest_hour}, {persons}, {name}, {phone_number}, {comment}")
 
-        return []
-
-class ActionHelloWorld(Action):
-    """
-    Action to respond with a hello world message.
-    """
-
-    def name(self) -> Text:
-        return "action_hello_world"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        print(f"Hello world action triggered")
-        return []
-
-class ActionGetReservations(Action):
-    """
-    Action to retrieve all reservations from the SQLite database.
-    """
-
-    def name(self) -> Text:
-        return "action_get_reservations"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
-        print(f"Get reservations action triggered")
-
-        connection = sqlite3.connect("rasa-reservation.db")
-        cursor = connection.cursor()
-        
-        try:
-            cursor.execute("SELECT * FROM reservation")
-            reservations = cursor.fetchall()
-            for reservation in reservations:
-                dispatcher.utter_message(text=f"Reservation: {reservation}")
-        except Exception as e:
-            dispatcher.utter_message(text=f"An error occurred while retrieving reservations: {e}")
-        finally:
-            connection.close()
-        
-        return []
-    
-class ActionCheckExistingReservation(Action):
-    """
-    Action to check if a reservation already exists in the SQLite database.
-    """
-
-    def name(self) -> Text:
-        return "action_check_existing_reservation"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
-        print(f"Check existing reservation action triggered")
-
-        rest_date = tracker.get_slot("rest_date")
-        rest_hour = tracker.get_slot("rest_hour")
-        persons = tracker.get_slot("persons")
-        name = tracker.get_slot("name")
-        telephone = tracker.get_slot("phone_number")
-
-        connection = sqlite3.connect("rasa-reservation.db")
-        cursor = connection.cursor()
-        
-        try:
-            cursor.execute("""
-                SELECT * FROM reservation
-                WHERE date = ? AND heure = ? AND nbr_personne = ? AND nom_reservation = ? AND num_telephone = ?
-            """, (rest_date, rest_hour, persons, name, telephone))
-            existing_reservations = cursor.fetchall()
-            if existing_reservations:
-                dispatcher.utter_message(text="Une réservation existe déjà avec le même numéro de téléphone.")
-            else:
-                dispatcher.utter_message(text="Aucune réservation trouvée pour ces détails.")
-        except Exception as e:
-            dispatcher.utter_message(text=f"An error occurred while checking reservations: {e}")
-        finally:
-            connection.close()
-        
-        return []
-    
-class ActionUpdateReservation(Action):
-    """
-    Action to update an existing reservation in the SQLite database.
-    """
-
-    def name(self) -> Text:
-        return "action_update_reservation"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
-        print(f"Update reservation action triggered")
-
-        rest_date = tracker.get_slot("rest_date")
-        rest_hour = tracker.get_slot("rest_hour")
-        persons = tracker.get_slot("persons")
-        name = tracker.get_slot("name")
-
-        connection = sqlite3.connect("rasa-reservation.db")
-        cursor = connection.cursor()
-        
-        try:
-            cursor.execute("""
-                UPDATE reservation
-                SET date = ?, nbr_personne = ?, heure = ?, nom_reservation = ?
-                WHERE date = ? AND heure = ? AND nbr_personne = ? AND nom_reservation = ?
-            """, (rest_date, persons, rest_hour, name, rest_date, rest_hour, persons, name))
-            connection.commit()
-            dispatcher.utter_message(text="Votre réservation a été mise à jour avec succès.")
-        except Exception as e:
-            dispatcher.utter_message(text=f"Une erreur est survenue lors de la mise à jour : {e}")
-        finally:
-            connection.close()
-        
         return []
     
 class ActionValidateReservationNumber(Action):
@@ -205,14 +87,40 @@ class ActionValidateReservationNumber(Action):
                 domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         print(f"Validate reservation number action triggered")
-        
+
         reservation_number = tracker.get_slot("number_reservation")
         is_valid = self._check_reservation_number(reservation_number)
         
+        intent_sequence = [e.get("parse_data", {}).get("intent", {}).get("name") 
+                          for e in tracker.events if e.get("event") == "user"]
+        
+        for intent in reversed(intent_sequence):
+            if intent != "provide_number_reservation":
+                initial_intent = intent
+                break
+        else:
+            initial_intent = "unknown"
+        
+        print(f"Intent initial: {initial_intent}, Numéro valide: {is_valid}")
+        
         if is_valid:
-            return [SlotSet("reservation_valid", True), 
+            if initial_intent == "modify_reservation":
+                return [
+                    SlotSet("reservation_valid", True),
+                    FollowupAction("utter_ask_new_comment")
+                ]
+            elif initial_intent == "cancel_reservation":
+                return [
+                    SlotSet("reservation_valid", True),
                     FollowupAction("utter_confirm_cancel_reservation")
-            ]
+                ]
+            elif initial_intent == "show_reservation_details":
+                return [
+                    SlotSet("reservation_valid", True),
+                    FollowupAction("action_show_reservation_details")
+                ]
+            else:
+                return [SlotSet("reservation_valid", True)]
         else:
             dispatcher.utter_message(text="Ce numéro de réservation n'est pas valide.")
             return [SlotSet("reservation_valid", False),
@@ -220,12 +128,11 @@ class ActionValidateReservationNumber(Action):
 ]
 
     def _check_reservation_number(self, number):
-        # Connexion à la base de données SQLite
         connection = sqlite3.connect("rasa-reservation.db")
         cursor = connection.cursor()
 
         try:
-            cursor.execute("SELECT * FROM reservation WHERE id = ?", (number,))
+            cursor.execute("SELECT * FROM reservation WHERE num_reservation = ?", (number,))
             result = cursor.fetchone()
             return result is not None
         except Exception as e:
@@ -233,6 +140,7 @@ class ActionValidateReservationNumber(Action):
             return False
         finally:
             connection.close()
+
 
 class ActionCancelReservation(Action):
     """
@@ -254,7 +162,7 @@ class ActionCancelReservation(Action):
         cursor = connection.cursor()
 
         try:
-            cursor.execute("DELETE FROM reservation WHERE id = ?", (reservation_number,))
+            cursor.execute("DELETE FROM reservation WHERE num_reservation = ?", (reservation_number,))
             connection.commit()
             if cursor.rowcount > 0:
                 dispatcher.utter_message(text=f"La réservation {reservation_number} a été annulée.")
@@ -266,6 +174,7 @@ class ActionCancelReservation(Action):
             connection.close()
         return []
     
+
 class ActionAskMenuOfDay(Action):
     """
     Action pour demander le menu du jour
@@ -296,43 +205,11 @@ class ActionAskMenuOfDay(Action):
             dispatcher.utter_message(text="Désolé, je n'ai pas pu récupérer le menu du jour.")
             print(f"Erreur lors de la récupération du menu : {e}")
         return []
-    
-class ActionCheckAndHandleReservation(Action):
-    def name(self) -> Text:
-        return "action_check_and_handle_reservation"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
-        rest_date = tracker.get_slot("rest_date")
-        rest_hour = tracker.get_slot("rest_hour")
-        persons = tracker.get_slot("persons")
-        name = tracker.get_slot("name")
-
-        connection = sqlite3.connect("rasa-reservation.db")
-        cursor = connection.cursor()
-
-        try:
-            cursor.execute("""
-                SELECT * FROM reservation
-                WHERE date = ? AND heure = ? AND nbr_personne = ? AND nom_reservation = ?
-            """, (rest_date, rest_hour, persons, name))
-            existing = cursor.fetchone()
-
-            if existing:
-                dispatcher.utter_message(text="Une réservation existe déjà avec ces détails. Souhaitez-vous choisir une autre date ?")
-                return [SlotSet("reservation_valid", False)]
-            else:
-                return [SlotSet("reservation_valid", True), FollowupAction("action_save_reservation")]
-        except Exception as e:
-            dispatcher.utter_message(text="Erreur lors de la vérification de réservation.")
-            print(e)
-            return []
-        finally:
-            connection.close()
 
 class ActionUpdateCommentReservation(Action):
+    '''
+    action pour mettre à jour le commentaire d'une réservation
+    '''
     def name(self) -> Text:
         return "action_update_comment_reservation"
 
@@ -352,7 +229,7 @@ class ActionUpdateCommentReservation(Action):
             cursor.execute("""
                 UPDATE reservation
                 SET commentaire = ?
-                WHERE id = ?
+                WHERE num_reservation = ?
             """, (new_comment, reservation_number))
             connection.commit()
             dispatcher.utter_message(text="Le commentaire de votre réservation a bien été mis à jour.")
@@ -363,4 +240,95 @@ class ActionUpdateCommentReservation(Action):
             connection.close()
         
         return []
+
+
+class ActionValidatePhoneNumber(Action):
+    '''
+    Action pour valider le numéro de téléphone
+    '''
+    def name(self) -> Text:
+        return "action_validate_phone_number"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        phone_number = tracker.get_slot("phone_number")
+        
+        if phone_number:
+            cleaned_number = re.sub(r'\s', '', phone_number)
+            # transforme tel:+3306152524|+3306152524 en +3306152524 pour ce faire il va récupérer tout ce qui est après le pipe
+            if "|" in cleaned_number:
+                cleaned_number = cleaned_number.split("|")[1]
+                
+            is_valid = bool(re.match(r'^(0|\+33|\+330)[1-9][0-9]{8}$', cleaned_number))
+            print(f"Numéro de téléphone : {cleaned_number}, valide : {is_valid}")
+            
+            if is_valid:
+                formatted_number = self._format_phone_number(cleaned_number)
+                return [SlotSet("phone_number", formatted_number),
+                        SlotSet("phone_valid", True), 
+                        FollowupAction("utter_booked_restaurant_add_comment")]
+        dispatcher.utter_message(text="Le numéro de téléphone n'est pas valide.")
+        return [SlotSet("phone_valid", False),
+                FollowupAction("utter_booked_restaurant_phone_number")
+]    
+    def _format_phone_number(self, number):
+        if number.startswith('+33'):
+            return number
+        else:
+            return ' '.join([number[i:i+2] for i in range(0, 10, 2)])
     
+
+
+class ActionShowReservationDetails(Action):
+    """
+    Action pour afficher les détails d'une réservation à partir de son numéro
+    """
+    def name(self) -> Text:
+        return "action_show_reservation_details"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        reservation_number = tracker.get_slot("number_reservation")
+        
+        # Connexion à la base de données
+        connection = sqlite3.connect("rasa-reservation.db")
+        cursor = connection.cursor()
+        
+        try:
+            # Requête pour récupérer les détails de la réservation
+            cursor.execute("""
+                SELECT date, nbr_personne, heure, nom_reservation, num_telephone, commentaire
+                FROM reservation
+                WHERE num_reservation = ?
+            """, (reservation_number,))
+            
+            result = cursor.fetchone()
+            
+            date, nbr_personnes, heure, nom, telephone, commentaire = result
+            
+            # Construction du message
+            details = f"Voici les détails de votre réservation n°{reservation_number} :\n"
+            details += f"📅 Date : {date}\n"
+            details += f"🕒 Heure : {heure}\n"
+            details += f"👥 Nombre de personnes : {nbr_personnes}\n"
+            details += f"👤 Au nom de : {nom}\n"
+            details += f"📞 Téléphone : {telephone}\n"
+            
+            if commentaire:
+                details += f"💬 Commentaire : {commentaire}"
+            else:
+                details += "💬 Aucun commentaire"
+                        
+            # Envoyer le message avec les détails
+            dispatcher.utter_message(text=details)
+            return []
+                
+        except Exception as e:
+            dispatcher.utter_message(text=f"Une erreur est survenue lors de la recherche de votre réservation : {e}")
+            return []
+        finally:
+            connection.close()

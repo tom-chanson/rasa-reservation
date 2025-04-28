@@ -5,31 +5,22 @@ intents:
   - goodbye
   - affirm
   - deny
-  - bot_challenge
-  - book_hotel
-  - book_hotel_time
-  - book_hotel_location
   - cancel_reservation
   - provide_number_reservation
   - ask_menu_of_the_day
   - ask_menu
-  - book_hotel_summary
   - book_restaurant
-  - book_restaurant_date
   - book_restaurant_hour 
   - book_restaurant_time
   - book_restaurant_persons
   - book_restaurant_reservation_name
   - book_restaurant_phone_number
   - book_restaurant_comment
-  - book_restaurant_summary
-  - book_restaurant_final
-
-  - say_hello
+  - modify_reservation
+  - show_reservation_details
 
 entities:
   - date
-  - city
   - number_reservation
   - rest_date
   - rest_hour
@@ -40,22 +31,17 @@ entities:
 
 actions:
   - action_save_reservation
-  - action_hello_world
   - action_insert_test
-  - action_get_reservations
   - action_validate_reservation_number
   - action_cancel_reservation
   - action_menu_of_day
-  - action_check_and_handle_reservation
   - action_update_comment_reservation
+  - action_validate_phone_number
+  - action_default_fallback
+  - action_show_reservation_details
 
 slots:
-  city:
-    type: text
-    mappings:
-    - type: from_entity
-      entity: city
-  
+
   date:
     type: text
     mappings:
@@ -109,6 +95,11 @@ slots:
     mappings:
     - type: custom
 
+  phone_valid:
+    type: bool
+    mappings:
+    - type: custom
+
 
 responses:
   utter_greet:
@@ -116,24 +107,6 @@ responses:
 
   utter_goodbye:
   - text: "Au revoir"
-
-  utter_iamabot:
-  - text: "Je suis un bot qui va renverser le monde 🤖"
-
-  utter_ask_hotel_time:
-  - text: "Quand souhaitez-vous réserver votre chambre d'hôtel ?"
-
-  utter_ask_hotel_location:
-  - text: "Dans quelle ville souhaitez-vous réserver votre chambre d'hôtel ?"
-
-  utter_ask_hotel_summary:
-  - text: "Résumé de votre réservation : Vous souhaitez réservé une chambre à {city} à la date {date}. Confirmez-vous ?"
-
-  utter_booked_hotel:
-  - text: "Votre chambre d'hôtel a bien été réservée."
-
-  utter_ask_restaurant_date:
-  - text: "Quand souhaitez-vous réserver votre table au restaurant ?"
 
   utter_booked_restaurant_hour:
   - text: "A quelle heure souhaitez-vous réserver votre table au restaurant ?"
@@ -156,9 +129,6 @@ responses:
   utter_deny_book_restaurant:
   - text: "Votre réservation n'a pas été enregistrée."
   
-  utter_booked_restaurant_final:
-  - text: "Votre réservation au restaurant a bien été enregistrée."
-  
   utter_confirm_cancel_reservation:
   - text: "Voulez-vous vraiment annuler votre réservation numéro {number_reservation} ?"
 
@@ -170,9 +140,6 @@ responses:
 
   utter_booked_restaurant_phone_number:
   - text: "Quel est votre numéro de téléphone ?"
-
-  utter_booked_restaurant_comment:
-  - text: "Avez-vous un commentaire à ajouter à votre réservation ?"
 
   utter_ask_new_comment:
   - text: "Quel nouveau commentaire souhaitez-vous ajouter à votre réservation ?"
@@ -189,6 +156,10 @@ responses:
   - text: "Lien vers la carte: http://www.lumberjackpizza.fr/wafx_res/Files/Flyer%20Nantes-2.jpg"
   - text: "Cliquer ici pour accéder à la http://www.lumberjackpizza.fr/wafx_res/Files/Flyer%20Nantes-2.jpg"
   - text: "Cliquez sur le lien pour voir le menu du jour : http://perdu.com/"
+
+  utter_deny_modify_reservation:
+  - text: "Votre réservation n'a pas été modifiée."
+
 
 session_config:
   session_expiration_time: 60
